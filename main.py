@@ -1,6 +1,9 @@
 from chatterbot import ChatBot
 import pickle
 from chatterbot.trainers import ListTrainer
+from chatterbot.storage import UserModel
+import os
+
 
 def main():
     chatbot = ChatBot("Chatbot")
@@ -11,12 +14,16 @@ def main():
     trainer = ListTrainer(chatbot)
     #trainer.train(knowledgebase)
 
+    username = input("Please enter your name: ")
+    user = UserModel(username)
+
     exit_conditions = (":q", "quit", "exit")
     while True:
         query = input("> ")
         if query in exit_conditions:
             break
         else:
+            user.analyze(query)
             print(f">> {chatbot.get_response(query)}")
 
 if __name__ == '__main__':
