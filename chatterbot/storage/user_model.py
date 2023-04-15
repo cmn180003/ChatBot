@@ -8,6 +8,7 @@ class UserModel(object):
         self.name = name
         self.likes = open((name + "_likes.csv"), "a")
         self.dislikes = open((name + "_dislikes.csv"), "a")
+        self.skills = open((name + "_skills.csv"), "a")
 
     def parse(self, statement):
         """
@@ -64,3 +65,13 @@ class UserModel(object):
         if pos >= 0.6:
             argument = self.parse(statement)
             self.addLike(argument)
+
+    def addSkill(self, statement):
+        """
+        Adds to user's skill repository
+        """
+        skill = statement.split(' ')[2]
+        third_word = statement.split(' ')[3]
+        if third_word != 'now':
+            skill = skill + third_word
+        self.skills.write(skill + ",")

@@ -3,6 +3,7 @@ import pickle
 from chatterbot.trainers import ListTrainer
 from chatterbot.storage import UserModel
 import os
+import re
 
 
 def main():
@@ -22,6 +23,9 @@ def main():
         query = input("> ")
         if query in exit_conditions:
             break
+        elif re.search(r"^(I (understand|learned|know))", query):
+            user.addSkill(query)
+            print(f">> {chatbot.get_response(query)}")
         else:
             user.analyze(query)
             print(f">> {chatbot.get_response(query)}")
